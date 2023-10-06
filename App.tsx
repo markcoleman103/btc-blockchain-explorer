@@ -9,22 +9,18 @@ import React, { useState } from 'react';
 import type {PropsWithChildren} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
   useColorScheme,
-  View,
-  Button
+  View
 } from 'react-native';
 
 import {
   Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+
+
+import { SearchArea } from './src/components/SearchArea'
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -57,56 +53,16 @@ function Section({children, title}: SectionProps): JSX.Element {
 }
 
 function App(): JSX.Element {
-  const [addressResult, setAddressResult] = useState({})
   const isDarkMode = useColorScheme() === 'dark';
-
-  async function getAddressInfo() {
-    const res = await fetch('https://blockchain.info/multiaddr?cors=true&active=34YSsghh1c553cw59x12ShYEKoxw9uqbCK');
-    setAddressResult(res);
-  }
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    flex:1, 
   };
-
 
   return (
     <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            <Button 
-              onPress={getAddressInfo} 
-              title="find Address"
-              color="#841584"
-              accessibilityLabel="Get address info"
-            />
-          </Section>
-          <Section title="Step One">
-            <Text>{JSON.stringify(addressResult)}</Text>
-          </Section>
-          {/* <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks /> */}
-        </View>
-      </ScrollView>
+      <SearchArea />
     </SafeAreaView>
   );
 }
