@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TouchableOpacity, View, TextInput, StyleSheet } from 'react-native';
 
 const SearchBox = props => {
     return (
         <TouchableOpacity onPress={props.onPress}>
             <View style={styles.boxContainer}>
-                <TextInput value={'33NmiXDg4dwkidfm67RmKTTgL7en7TvxCw'} onChangeText={props.onTextChange} />
+                <TextInput value={props.value} onChangeText={props.onTextChange} />
             </View>
         </TouchableOpacity>
     )

@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Text, StyleSheet, TextInput, ScrollView } from 'react-native';
 
-import { SearchButton } from './SearchButton'
-import { SearchBox } from './SearchBox'
-import { SearchResultsPanel } from './SearchResultsPanel'
-import { Loading } from './Loading'
+import { SearchButton } from './../components/SearchButton'
+import { SearchBox } from './../components/SearchBox'
+import { SearchResultsPanel } from './../components/SearchResultsPanel'
+import { Loading } from './../components/Loading'
 
-const SearchArea = props => {
+import { blockchainUrl } from './../utils/consts'
+
+export const SearchScreen = () => {
     
     const [loading, setLoading] = useState(false)
     const [addressResult, setAddressResult] = useState({})
@@ -19,7 +21,7 @@ const SearchArea = props => {
     async function getAddressInfo() {
         if(searchTerm?.length < 5) { return setAddressResult('') }
         setLoading(true)
-        const res = await fetch(`https://blockchain.info/multiaddr?cors=true&active=${searchTerm}`)
+        const res = await fetch(`${blockchainUrl}${searchTerm}`)
                                 .then(response => response.json())
                                 .then(data => {return data});
         setAddressResult(res);
@@ -49,4 +51,3 @@ const styles = StyleSheet.create({
     }
   });
   
-  export {SearchArea};

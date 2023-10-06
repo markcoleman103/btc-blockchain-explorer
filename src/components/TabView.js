@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, TouchableOpacity, View, Text, StyleSheet, Dimensions, Animated  } from 'react-native';
-
 const { width } = Dimensions.get("window");
-
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-const Tab = createMaterialTopTabNavigator();
 
 const TabView = props => {
     
@@ -16,6 +12,11 @@ const TabView = props => {
     const [translateXTabOne, setTranslateXTabOne] = useState(new Animated.Value(0));
     const [translateXTabTwo, setTranslateXTabTwo] = useState(new Animated.Value(width));
 
+    const button1label = props?.buttonLabels[0];
+    const button2label = props?.buttonLabels[1];
+    const Content1 = props?.content[0];
+    const Content2 = props?.content[1];
+
     useEffect(() => {
         if (buttonId == '1') {
             this.handleSlide(xTabOne)
@@ -23,9 +24,6 @@ const TabView = props => {
             this.handleSlide(xTabTwo)
         }
       }, [buttonId]);
-
-    const wallet = props.addressResult.wallet;
-    const txs = props.addressResult.txs;
 
     handleSlide = type => {
         Animated.spring(translateX, {
@@ -64,7 +62,6 @@ const TabView = props => {
 
     return (
         <View
-            // contentInsetAdjustmentBehavior="automatic"
             style={{
                 height: '100%',
                 flex:1, flexGrow:1, padding:20, display: 'flex',
@@ -88,74 +85,27 @@ const TabView = props => {
                         }}
                     />
                     <TouchableOpacity
-                        style={{
-                            flex: 1,
-                            flexDirection: 'row',
-                            justifyContent: "center",
-                            alignItems: "center",
-                            borderWidth: 1,
-                            borderColor: "#fff",
-                            borderRadius: 4,
-                            borderRightWidth: 0,
-                            borderTopRightRadius: 0,
-                            borderBottomRightRadius: 0
-                        }}
-                        onLayout={event =>
-                            setXTabOne(event.nativeEvent.layout.x)
-                        }
-                        onPress={() => {
-                                setButtonId('1')
-                                
-                            }
-                        }
+                        style={styles.tabBarButtonOne}
+                        onLayout={event => setXTabOne(event.nativeEvent.layout.x) }
+                        onPress={() => { setButtonId('1') } }
                     >
-                        <Text
-                            style={{
-                                color: buttonId === '1' ? "#F2A900" : "#fff",
-                            }}
-                        >
-                            Wallet
+                        <Text style={{color: buttonId === '1' ? "#F2A900" : "#fff"}}>
+                            {button1label}
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{
-                            flex: 1,
-                            flexDirection: 'row',
-                            justifyContent: "center",
-                            alignItems: "center",
-                            borderWidth: 1,
-                            borderColor: "#fff",
-                            borderRadius: 4,
-                            borderLeftWidth: 0,
-                            borderTopLeftRadius: 0,
-                            borderBottomLeftRadius: 0
-                        }}
-                        onLayout={event =>
-                            setXTabTwo(event.nativeEvent.layout.x)
-                        }
-                        onPress={() => {
-                                setButtonId('2')
-
-                            }
-                        }
+                        style={styles.tabBarButtonTwo}
+                        onLayout={event => setXTabTwo(event.nativeEvent.layout.x) }
+                        onPress={() => { setButtonId('2') } }
                     >
-                        <Text
-                            style={{
-                                color: buttonId === '2' ? "#F2A900" : "#fff",
-                            }}
-                        >
-                            Transactions
+                        <Text style={{ color: buttonId === '2' ? "#F2A900" : "#fff"}}>
+                            {button2label}
                         </Text>
                     </TouchableOpacity>
-
-                    {/* <TabBarButton label={'All'} selected={this.state.buttonSelected} buttonId={'1'} handlePress={this.toggleActivityList } />
-                    <TabBarButton label={'My Activities'} selected={this.state.buttonSelected} buttonId={'2'} handlePress={ this.toggleActivityList } count={this.state.myActivities.length} /> */}
-                    
                 </View>
             </View>
-            <ScrollView style={{flex:1, flexGrow:1, padding:20, display: 'flex', }}>
-                <Animated.View
-                    style={{
+            <ScrollView style={{flex:1, flexGrow:1, padding:20, display: 'flex' }}>
+                <Animated.View style={{
                         flex:1, 
                         flexGrow:1, 
                         display: 'flex', 
@@ -164,37 +114,12 @@ const TabView = props => {
                                 translateX: translateXTabOne
                             }
                         ]
-                    }}
-                    onLayout={event =>
-                        setTranslateY(event.nativeEvent.layout.height)
-                    }
+                    }} 
+                    onLayout={event => setTranslateY(event.nativeEvent.layout.height) }
                 >   
-                    <View>
-                        <Text style={{fontSize: 20}}>{'Wallet'}</Text>
-                        <View style={{flexDirection:'row'}}>
-                            <Text>{'Confirmed Transactions: '}</Text>
-                            <Text>{wallet?.n_tx || '-'}</Text>
-                        </View> 
-                        <View style={{flexDirection:'row'}}>
-                            <Text>{'Total Received: '}</Text>
-                            <Text>{wallet?.total_received || '-'}</Text>
-                        </View> 
-                        <View style={{flexDirection:'row'}}>
-                            <Text>{'Total Spent: '}</Text> 
-                            <Text>{wallet?.total_sent || '-'}</Text>
-                        </View> 
-                        <View style={{flexDirection:'row'}}>
-                            <Text>{'Total Unspent: '}</Text>
-                            <Text>{(wallet?.total_received - wallet?.total_sent) || '-'}</Text>
-                        </View> 
-                        <View style={{flexDirection:'row'}}>
-                            <Text>{'Current Balance: '}</Text>
-                            <Text>{wallet?.final_balance || '-'}</Text>
-                        </View> 
-                    </View>
+                    {Content1}
                 </Animated.View>
-                <Animated.View
-                    style={{
+                <Animated.View style={{
                         flex:1, flexGrow:1,
                         display: 'flex', 
                         transform: [
@@ -205,16 +130,11 @@ const TabView = props => {
                                 translateY: -(translateY)
                             }
                         ]
-                    }}
+                    }} 
                 >
-                    <View>
-                        <Text style={{fontSize: 20}}>{'Transactions'}</Text>
-                    </View>
+                    {Content2}
                 </Animated.View>
             </ScrollView>
-
-            
-
         </View>
     )
 }
@@ -226,7 +146,29 @@ const styles = StyleSheet.create({
     },
     SearchBoxContainer: {
         flexDirection: 'column',
-    }
+    },
+    tabBarButtonOne: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 1,
+        borderColor: "#fff",
+        borderRightWidth: 0,
+        borderTopLeftRadius: 4,
+        borderBottomLeftRadius: 4
+    },
+    tabBarButtonTwo: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 1,
+        borderColor: "#fff",
+        borderLeftWidth: 0,
+        borderTopRightRadius: 4,
+        borderBottomRightRadius: 4
+    },
   });
   
   export {TabView};

@@ -28,3 +28,4 @@ com.btcblockchainapp-merged_res-26 C:\technical-tests\btc-blockchain-explorer\an
 com.btcblockchainapp-debug-27 C:\technical-tests\btc-blockchain-explorer\android\app\src\debug\res
 com.btcblockchainapp-main-28 C:\technical-tests\btc-blockchain-explorer\android\app\src\main\res
 com.btcblockchainapp-packaged_res-29 C:\technical-tests\btc-blockchain-explorer\node_modules\react-native-pager-view\android\build\intermediates\packaged_res\debug
+com.btcblockchainapp-packaged_res-30 C:\technical-tests\btc-blockchain-explorer\node_modules\react-native-safe-area-context\android\build\intermediates\packaged_res\debug

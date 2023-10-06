@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet  } from 'react-native';
+import { DateTime } from 'luxon'
 
 const TransactionItem = props => {
 
@@ -14,17 +15,16 @@ const TransactionItem = props => {
 
     return (
         <View style={styles.item}>
-  
             <View style={styles.fieldColumn}>
                 <Text style={styles.fieldHeaderColumn}>{'Hash '}</Text>
                 <Text style={styles.fieldValueColumn}>{displayCroppedHash(props?.tx?.hash)}</Text>
             </View> 
             <View style={styles.fieldRow}>
                 <Text style={styles.fieldHeader}>{'Time '}</Text>
-                <Text style={styles.fieldValue}>{props?.tx?.time || '-'}</Text>
+                <Text style={styles.fieldValue}>{DateTime.fromSeconds(props?.tx?.time).toLocaleString(DateTime.DATETIME_MED) || '-'}</Text>
             </View> 
             <View style={styles.fieldRow}>
-                <Text style={styles.fieldHeader}>{'Total Spent '}</Text> 
+                <Text style={styles.fieldHeader}>{'Status '}</Text> 
                 <Text style={styles.fieldValue}>{props?.tx?.status || '-'}</Text>
             </View> 
             <View style={styles.fieldRow}>
